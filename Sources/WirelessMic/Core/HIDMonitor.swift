@@ -48,6 +48,7 @@ final class HIDMonitor {
     /// - 0x41 菜单选择 = 确认、0xCD 播放/暂停 = 确认（若确认键同时发 0x41 与 0xCD，
     ///   下面的按键级去重会合并成一次，不会变双击）
     /// - 0x223 AC Home = 主页、0x30 电源 = 电源
+    /// - 0x89（Menu，2026-10-26 日志实测，按右下角输入源键出现）= 输入源
     /// - 0x19E（AL Terminal Lock，2026-10-26 日志实测）= 遥控器电源键，系统默认响应为锁屏
     /// - YouTube、Netflix、输入源：厂商自定义用法未知，不猜，等日志再补。
     private static let keyTable: [Int: [Int: RemoteButton]] = [
@@ -73,6 +74,7 @@ final class HIDMonitor {
             0x223: .home,
             0x30: .power,
             0x19E: .power,
+            0x89: .input,
         ],
     ]
 
