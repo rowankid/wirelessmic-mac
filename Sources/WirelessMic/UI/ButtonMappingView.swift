@@ -118,8 +118,9 @@ struct ButtonMappingView: View {
         .netflix: Hotspot(x: 0.725, y: 0.613, w: 0.307, h: 0.096),
         .power: Hotspot(x: 0.247, y: 0.734, w: 0.175, h: 0.056),
         .input: Hotspot(x: 0.727, y: 0.734, w: 0.173, h: 0.056),
-        .volumeUp: Hotspot(x: 0.985, y: 0.218, w: 0.05, h: 0.035),
-        .volumeDown: Hotspot(x: 0.985, y: 0.246, w: 0.05, h: 0.035),
+        // 音量拨杆：逐行扫描照片最右侧边缘实测——凸起 y 292–496，中间缝在 y≈400（上键 292–400，下键 404–496）。
+        .volumeUp: Hotspot(x: 0.985, y: 0.240, w: 0.05, h: 0.070),
+        .volumeDown: Hotspot(x: 0.985, y: 0.312, w: 0.05, h: 0.062),
     ]
     /// 话筒键热点（语音导航卡的连线落点）。
     private let micHotspot = Hotspot(x: 0.733, y: 0.359, w: 0.296, h: 0.093)
