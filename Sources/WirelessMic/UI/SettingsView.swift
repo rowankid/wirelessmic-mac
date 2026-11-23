@@ -12,6 +12,7 @@ struct SettingsView: View {
     @State private var launchAtLogin = false
     @State private var launchError: String?
     @State private var applyingLaunchChange = false
+    @AppStorage(DockIconPreference.key) private var showDockIcon = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -32,6 +33,18 @@ struct SettingsView: View {
                                 .foregroundStyle(Theme.error)
                                 .font(.system(size: 11))
                         }
+                    }
+                    .padding(10)
+                    Divider()
+                    ThemeRow(label: "Dock 图标") {
+                        Toggle("在 Dock 显示图标", isOn: $showDockIcon)
+                            .labelsHidden()
+                            .onChange(of: showDockIcon) { _, newValue in
+                                DockIconPreference.apply(newValue)
+                            }
+                        Text("关闭后只在菜单栏常驻，点菜单栏图标 → 打开主窗口")
+                            .foregroundStyle(Theme.textSecondary)
+                            .font(.system(size: 11))
                     }
                     .padding(10)
                 }

@@ -4,8 +4,32 @@
 import SwiftUI
 import AppKit
 
+/// Dock 图标开关（默认不显示：只在菜单栏常驻）。存在 UserDefaults，不进 settings.json。
+enum DockIconPreference {
+    static let key = "showDockIcon"
+
+    static var showDockIcon: Bool {
+        UserDefaults.standard.bool(forKey: key)
+    }
+
+    /// 应用激活策略：显示 Dock 图标用 .regular；只留菜单栏用 .accessory（无 Dock 图标、无 ⌘Tab 条目）。
+    static func apply(_ show: Bool) {
+        NSApplication.shared.setActivationPolicy(show ? .regular : .accessory)
+        if show {
+            NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+}
+
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        DockIconPreference.apply(DockIconPreference.showDockIcon)
+    }
+}
+
 @main
 struct WirelessMicApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var engine = MicEngine()
 
     var body: some Scene {
